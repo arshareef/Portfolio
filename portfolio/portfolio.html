@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ar-shareef A. Haber · portfolio</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { scroll-behavior: smooth; }
+    
+    /* Custom dark theme variables */
+    :root {
+      --bg-primary: #0a0c0f;
+      --bg-secondary: #111417;
+      --accent-1: #3b82f6;
+      --accent-2: #8b5cf6;
+      --text-primary: #f0f4fa;
+      --text-secondary: #9ca3af;
+      --card-bg: #15191e;
+      --border-color: #2a2f37;
+    }
+    
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    /* Custom animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    /* Animation classes */
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .animate-glow {
+      animation: glow 3s ease-in-out infinite;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+    
+    .slide-up {
+      opacity: 0;
+      animation: slideUp 0.6s ease forwards;
+    }
+    
+    .scale-in {
+      opacity: 0;
+      animation: scaleIn 0.5s ease forwards;
+    }
+    
+    /* Staggered delays */
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    
+    /* Card styles */
+    .project-card {
+      background: linear-gradient(145deg, var(--card-bg), #1a1f25);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .project-card:hover::before {
+      left: 100%;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: var(--accent-1);
+      box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.3);
+    }
+    
+    /* Skill pill styles */
+    .skill-pill {
+      background: rgba(21, 25, 30, 0.8);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .skill-pill:hover {
+      border-color: var(--accent-1);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 10px 20px -10px var(--accent-1);
+    }
+    
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Button styles */
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+    }
+    
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+    
+    .btn-primary:hover::before {
+      width: 200px;
+      height: 200px;
+    }
+    
+    /* Contact input styles */
+    .contact-input {
+      background: rgba(21, 25, 30, 0.8);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+    
+    .contact-input:focus {
+      border-color: var(--accent-1);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      outline: none;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border-radius: 5px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0a0c0f]/80 backdrop-blur-md border-b border-[#2a2f37]">
+    <div class="max-w-6xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <a href="#" class="text-2xl font-bold gradient-text animate-float">PORTFOLIO</a>
+        <div class="flex items-center gap-8">
+          <a href="#about" class="text-sm hover:text-blue-400 transition-colors">About</a>
+          <a href="#skills" class="text-sm hover:text-blue-400 transition-colors">Skills</a>
+          <a href="#projects" class="text-sm hover:text-blue-400 transition-colors">Projects</a>
+          <a href="#contact" class="text-sm hover:text-blue-400 transition-colors">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto px-6 pt-24 pb-16">
+    
+    <!-- Hero / About Section -->
+    <section id="about" class="min-h-screen flex items-center py-20">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Left content -->
+        <div class="space-y-6">
+          <div class="inline-block px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium slide-up">
+            <i class="fas fa-code mr-2"></i>Front-end developer
+          </div>
+          
+          <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+            <span class="block slide-up delay-1">Hi, I'm</span>
+            <span class="block gradient-text text-6xl md:text-7xl slide-up delay-2">Ar-shareef A. Haber</span>
+            <span class="block text-2xl md:text-3xl text-gray-300 mt-2 slide-up delay-3">Crafting digital experiences with precision</span>
+          </h1>
+          
+          <p class="text-xl text-gray-400 leading-relaxed slide-up delay-3">
+            I'm a passionate developer with 3+ years of experience building 
+            web applications. I love turning complex problems into 
+            simple, elegant solutions.
+          </p>
+          
+          <div class="flex items-center gap-4 slide-up delay-4">
+            <a href="#contact" class="btn-primary px-6 py-3 rounded-lg font-medium text-white">
+              <i class="fas fa-paper-plane mr-2"></i>Hire Me
+            </a>
+            <a href="#projects" class="px-6 py-3 rounded-lg font-medium border border-[#2a2f37] hover:border-blue-500 transition-colors">
+              <i class="fas fa-eye mr-2"></i>View Work
+            </a>
+          </div>
+          
+          <!-- Social links -->
+          <div class="flex items-center gap-4 pt-6 slide-up delay-5">
+            <a href="#" class="w-10 h-10 rounded-full bg-[#15191e] border border-[#2a2f37] flex items-center justify-center hover:border-blue-500 hover:text-blue-400 transition-all hover:-translate-y-1">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-[#15191e] border border-[#2a2f37] flex items-center justify-center hover:border-blue-500 hover:text-blue-400 transition-all hover:-translate-y-1">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-[#15191e] border border-[#2a2f37] flex items-center justify-center hover:border-blue-500 hover:text-blue-400 transition-all hover:-translate-y-1">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Right content - Stats -->
+        <div class="grid grid-cols-2 gap-6 slide-up delay-2">
+          <div class="bg-[#15191e] p-6 rounded-2xl border border-[#2a2f37] hover:border-blue-500 transition-all hover:-translate-y-2">
+            <div class="text-4xl font-bold gradient-text">3+</div>
+            <div class="text-gray-400 mt-2">Years Experience</div>
+          </div>
+          <div class="bg-[#15191e] p-6 rounded-2xl border border-[#2a2f37] hover:border-blue-500 transition-all hover:-translate-y-2">
+            <div class="text-4xl font-bold gradient-text">4</div>
+            <div class="text-gray-400 mt-2">Projects Done</div>
+          </div>
+          <div class="bg-[#15191e] p-6 rounded-2xl border border-[#2a2f37] hover:border-blue-500 transition-all hover:-translate-y-2">
+            <div class="text-4xl font-bold gradient-text">1</div>
+            <div class="text-gray-400 mt-2">Happy Clients</div>
+          </div>
+          <div class="bg-[#15191e] p-6 rounded-2xl border border-[#2a2f37] hover:border-blue-500 transition-all hover:-translate-y-2">
+            <div class="text-4xl font-bold gradient-text">4</div>
+            <div class="text-gray-400 mt-2">Main Languages</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">Technical <span class="gradient-text">Skills</span></h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">The programming languages and technologies I work with daily</p>
+      </div>
+      
+      <!-- 4 Programming Languages Cards -->
+      <div class="grid md:grid-cols-4 gap-6">
+        <!-- JavaScript -->
+        <div class="skill-pill rounded-2xl p-8 text-center group scale-in delay-1">
+          <div class="w-20 h-20 mx-auto mb-4 bg-yellow-500/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fab fa-js text-4xl text-yellow-400"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">JavaScript</h3>
+          <p class="text-sm text-gray-400">React, Node.js</p>
+          <div class="mt-4 w-full bg-gray-700 h-1 rounded-full overflow-hidden">
+            <div class="bg-yellow-400 h-1 rounded-full" style="width: 90%"></div>
+          </div>
+        </div>
+        
+        <!-- Python -->
+        <div class="skill-pill rounded-2xl p-8 text-center group scale-in delay-2">
+          <div class="w-20 h-20 mx-auto mb-4 bg-blue-500/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fab fa-python text-4xl text-blue-400"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Python</h3>
+          <p class="text-sm text-gray-400">Django</p>
+          <div class="mt-4 w-full bg-gray-700 h-1 rounded-full overflow-hidden">
+            <div class="bg-blue-400 h-1 rounded-full" style="width: 85%"></div>
+          </div>
+        </div>
+        
+        <!-- CSS -->
+        <div class="skill-pill rounded-2xl p-8 text-center group scale-in delay-3">
+          <div class="w-20 h-20 mx-auto mb-4 bg-purple-500/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fab fa-css3-alt text-4xl text-purple-400"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">CSS</h3>
+          <p class="text-sm text-gray-400">Tailwind, Flex/Grid, Animations</p>
+          <div class="mt-4 w-full bg-gray-700 h-1 rounded-full overflow-hidden">
+            <div class="bg-purple-400 h-1 rounded-full" style="width: 95%"></div>
+          </div>
+        </div>
+        
+        <!-- PHP -->
+        <div class="skill-pill rounded-2xl p-8 text-center group scale-in delay-4">
+          <div class="w-20 h-20 mx-auto mb-4 bg-indigo-500/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+            <i class="fab fa-php text-4xl text-indigo-400"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-2">PHP</h3>
+          <p class="text-sm text-gray-400">Laravel, MySQL</p>
+          <div class="mt-4 w-full bg-gray-700 h-1 rounded-full overflow-hidden">
+            <div class="bg-indigo-400 h-1 rounded-full" style="width: 80%"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Additional Tools/Skills -->
+      <div class="mt-12 flex flex-wrap justify-center gap-3">
+        <span class="px-4 py-2 bg-[#15191e] border border-[#2a2f37] rounded-full text-sm hover:border-blue-500 transition-all">React</span>
+        <span class="px-4 py-2 bg-[#15191e] border border-[#2a2f37] rounded-full text-sm hover:border-blue-500 transition-all">Node.js</span>
+        <span class="px-4 py-2 bg-[#15191e] border border-[#2a2f37] rounded-full text-sm hover:border-blue-500 transition-all">Django</span>
+        <span class="px-4 py-2 bg-[#15191e] border border-[#2a2f37] rounded-full text-sm hover:border-blue-500 transition-all">Laravel</span>
+        <span class="px-4 py-2 bg-[#15191e] border border-[#2a2f37] rounded-full text-sm hover:border-blue-500 transition-all">MySQL</span>
+        <span class="px-4 py-2 bg-[#15191e] border border-[#2a2f37] rounded-full text-sm hover:border-blue-500 transition-all">Github</span>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">Featured <span class="gradient-text">Projects</span></h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">A selection of my recent work and personal projects</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Project 1: Trapick -->
+        <div class="project-card rounded-3xl p-6 slide-up delay-1">
+          <div class="relative mb-4 rounded-xl overflow-hidden group">
+            <div class="aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+              <i class="fas fa-chart-line text-6xl text-blue-400/50 group-hover:scale-110 transition-transform"></i>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-2xl font-bold">Trapick</h3>
+            <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-xs text-blue-400">ML/AI</span>
+          </div>
+          <p class="text-gray-400 mb-4">Traffic prediction website using machine learning to forecast congestion and suggest optimal routes in real-time.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">Python</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">node.js</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">YOLO V8</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">JavaScript</span>
+          </div>
+          <div class="flex items-center gap-3">
+          </div>
+        </div>
+        
+        <!-- Project 2: LNSC Laptop -->
+        <div class="project-card rounded-3xl p-6 slide-up delay-2">
+          <div class="relative mb-4 rounded-xl overflow-hidden group">
+            <div class="aspect-video bg-gradient-to-br from-green-500/20 to-blue-500/20 flex items-center justify-center">
+              <i class="fas fa-laptop text-6xl text-green-400/50 group-hover:scale-110 transition-transform"></i>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-2xl font-bold">LNSC Laptop</h3>
+            <span class="px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full text-xs text-green-400">E-commerce</span>
+          </div>
+          <p class="text-gray-400 mb-4">Full-featured e-commerce platform for laptop sales with product filtering, cart, authentication, and secure checkout.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">React</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">Node.js</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">php</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">CSS</span>
+          </div>
+          <div class="flex items-center gap-3">
+          </div>
+        </div>
+        
+        <!-- Project 3: Basic E-commerce -->
+        <div class="project-card rounded-3xl p-6 slide-up delay-3">
+          <div class="relative mb-4 rounded-xl overflow-hidden group">
+            <div class="aspect-video bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center">
+              <i class="fas fa-shopping-cart text-6xl text-orange-400/50 group-hover:scale-110 transition-transform"></i>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-2xl font-bold">Basic E-commerce</h3>
+            <span class="px-3 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full text-xs text-orange-400">Web App</span>
+          </div>
+          <p class="text-gray-400 mb-4">Minimalist storefront with cart functionality, inventory management, and smooth transitions using modern stack.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">PHP</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">MySQL</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">JavaScript</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">Tailwind</span>
+          </div>
+          <div class="flex items-center gap-3">
+          </div>
+        </div>
+        
+        <!-- Project 4: Portfolio -->
+        <div class="project-card rounded-3xl p-6 slide-up delay-4">
+          <div class="relative mb-4 rounded-xl overflow-hidden group">
+            <div class="aspect-video bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
+              <i class="fas fa-user-circle text-6xl text-purple-400/50 group-hover:scale-110 transition-transform"></i>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-2xl font-bold">Portfolio</h3>
+            <span class="px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-xs text-purple-400">Design</span>
+          </div>
+          <p class="text-gray-400 mb-4">Modern dark-themed portfolio with smooth animations, interactive elements, and responsive design using Tailwind CSS.</p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">HTML5</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">CSS3</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">JavaScript</span>
+            <span class="px-3 py-1 bg-[#1a1f25] rounded-full text-xs">Tailwind</span>
+          </div>
+          <div class="flex items-center gap-3">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <!-- Left side - Contact info -->
+        <div class="space-y-6 slide-up">
+          <h2 class="text-4xl font-bold">Let's work <span class="gradient-text">together</span></h2>
+          <p class="text-gray-400 text-lg">Have a project in mind? I'd love to hear about it. Send me a message and I'll get back to you as soon as possible.</p>
+          
+          <div class="space-y-4">
+            <div class="flex items-center gap-4 p-4 bg-[#15191e] rounded-xl border border-[#2a2f37] hover:border-blue-500 transition-all">
+              <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                <i class="fas fa-envelope text-blue-400"></i>
+              </div>
+              <div>
+                <div class="text-sm text-gray-400">Email</div>
+                <div class="font-medium">haberarshareef@gmail.com</div>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-4 p-4 bg-[#15191e] rounded-xl border border-[#2a2f37] hover:border-blue-500 transition-all">
+              <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center">
+                <i class="fas fa-phone-alt text-purple-400"></i>
+              </div>
+              <div>
+                <div class="text-sm text-gray-400">Phone</div>
+                <div class="font-medium">+64 (966) 541-8388</div>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-4 p-4 bg-[#15191e] rounded-xl border border-[#2a2f37] hover:border-blue-500 transition-all">
+              <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center">
+                <i class="fas fa-map-marker-alt text-green-400"></i>
+              </div>
+              <div>
+                <div class="text-sm text-gray-400">Location</div>
+                <div class="font-medium">Zamboanga city, Philippines</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right side - Contact form -->
+        <div class="bg-[#15191e] p-8 rounded-3xl border border-[#2a2f37] slide-up delay-2">
+          <form class="space-y-6">
+            <div>
+              <label class="block text-sm font-medium mb-2">Name</label>
+              <input type="text" class="contact-input w-full px-4 py-3 rounded-lg" placeholder="Name">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Email</label>
+              <input type="email" class="contact-input w-full px-4 py-3 rounded-lg" placeholder="Haber@example.com">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Message</label>
+              <textarea rows="4" class="contact-input w-full px-4 py-3 rounded-lg" placeholder="Tell me about your project..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn-primary w-full py-3 rounded-lg font-medium text-white">
+              <i class="fas fa-paper-plane mr-2"></i>Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="pt-20 pb-8 border-t border-[#2a2f37]">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="text-2xl font-bold gradient-text">Ar-shareef A. Haber</div>
+        <div class="text-sm text-gray-400">© 2025 All rights reserved. Built with Tailwind CSS</div>
+        <div class="flex items-center gap-4">
+          <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors"><i class="fab fa-github"></i></a>
+          <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </footer>
+  </div>
+  
+  <!-- Smooth scroll and animation trigger -->
+  <script>
+    // Add active state to navigation based on scroll
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('nav a');
+      
+      window.addEventListener('scroll', function() {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute('id');
+          }
+        });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('text-blue-400');
+          if (link.getAttribute('href').includes(current)) {
+            link.classList.add('text-blue-400');
+          }
+        });
+      });
+      
+      // Trigger animations on scroll with Intersection Observer
+      const animatedElements = document.querySelectorAll('.slide-up, .scale-in, .fade-in');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0) scale(1)';
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      animatedElements.forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
